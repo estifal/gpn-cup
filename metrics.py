@@ -1,5 +1,6 @@
 import numpy as np
 from numpy import ndarray
+from tqdm import tqdm
 
 
 def precision_at_k(actual: ndarray, predicted: ndarray, k: int = 20) -> float:
@@ -23,6 +24,8 @@ def average_precision_at_k(actual: ndarray, predicted: ndarray, k: int = 20) -> 
 def mean_average_precision_at_k(actual: ndarray,
                                 predicted: ndarray,
                                 k: int = 20) -> float:
-    all_apk = [average_precision_at_k(a, p, k) for a, p in zip(actual, predicted)]
+    all_apk = []
+    for (a, p) in tqdm(zip(actual, predicted)):
+        all_apk.append(average_precision_at_k(a, p, k))
     score = float(np.mean(all_apk))
     return score
