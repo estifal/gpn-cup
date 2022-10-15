@@ -5,8 +5,7 @@ from tqdm.notebook import tqdm
 
 def precision_at_k(actual: ndarray, predicted: ndarray, k: int = 20) -> float:
     predicted = predicted[:k]
-    relevant = np.in1d(predicted, actual)
-    score = np.sum(predicted[relevant]) / k
+    score = np.in1d(predicted, actual).mean()
 
     return float(score)
 
@@ -16,7 +15,7 @@ def average_precision_at_k(actual: ndarray, predicted: ndarray, k: int = 20) -> 
     relevant: ndarray = np.in1d(predicted, actual)
     score = 0
     for i in range(1, k + 1):
-        score += precision_at_k(actual, predicted[:i], i) * relevant[i - 1]
+        score += precision_at_k(actual, predicted[:i], i) * int(relevant[i - 1])
 
     return score / k
 
