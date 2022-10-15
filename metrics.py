@@ -6,7 +6,7 @@ from tqdm.notebook import tqdm
 def precision_at_k(actual: ndarray, predicted: ndarray, k: int = 20) -> float:
     predicted = predicted[:k]
     relevant = np.in1d(predicted, actual)
-    score = predicted[relevant].sum()
+    score = predicted[relevant].mean()
 
     return float(score)
 
